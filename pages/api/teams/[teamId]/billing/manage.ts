@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+// Billing features are disabled in the open-source edition
+
 export const config = {
   // in order to enable `waitUntil` function
   supportsResponseStreaming: true,
