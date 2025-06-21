@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 export const config = {
+  // in order to enable `waitUntil` function
   supportsResponseStreaming: true,
 };
 
