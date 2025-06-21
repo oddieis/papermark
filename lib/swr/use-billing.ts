@@ -7,9 +7,6 @@ import { fetcher } from "@/lib/utils";
 interface BillingProps {
   id: string;
   plan: string;
-  startsAt: Date | null;
-  endsAt: Date | null;
-  subscriptionId: string | null;
   _count: {
     documents: number;
   };

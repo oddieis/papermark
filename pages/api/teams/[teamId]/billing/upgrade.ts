@@ -21,6 +21,8 @@ export default async function handle(
   res: NextApiResponse,
 ) {
   if (req.method === "POST") {
+    return res.status(501).json({ error: "Billing disabled" });
+    /*
     // POST /api/teams/:teamId/billing/upgrade
     const session = await getServerSession(req, res, authOptions);
     if (!session) {
@@ -120,6 +122,7 @@ export default async function handle(
     );
 
     return res.status(200).json(stripeSession);
+    */
   } else {
     // We only allow POST requests
     res.setHeader("Allow", ["POST"]);

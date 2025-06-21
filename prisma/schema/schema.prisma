@@ -52,10 +52,6 @@ model User {
   chats          Chat[]
   contactId      String?
   plan           String     @default("free")
-  stripeId       String?    @unique // Stripe subscription / customer ID
-  subscriptionId String?    @unique // Stripe subscription ID
-  startsAt       DateTime? // Stripe subscription start date
-  endsAt         DateTime? // Stripe subscription end date
 
   restrictedTokens RestrictedToken[]
 
@@ -85,10 +81,6 @@ model Team {
   views View[]
 
   plan           String    @default("free")
-  stripeId       String?   @unique // Stripe customer ID
-  subscriptionId String?   @unique // Stripe subscription ID
-  startsAt       DateTime? // Stripe subscription start date
-  endsAt         DateTime? // Stripe subscription end date
 
   linkPresets LinkPreset[] // Link presets for the team
 
