@@ -44,7 +44,7 @@ export default async function handle(
     //     where: {
     //       id: teamId,
     //       plan: {
-    //         notIn: ["free", "free+drtrial"],
+    //         notIn: ["free"],
     //       },
     //       users: {
     //         some: {

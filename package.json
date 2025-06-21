@@ -17,7 +17,8 @@
     "trigger:v3:deploy": "npx trigger.dev@latest deploy",
     "stripe:webhook": "pkgx stripe listen --forward-to localhost:3000/api/stripe/webhook",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,mdx}\"",
-    "dev:prisma": "npx prisma generate && npx prisma migrate deploy"
+    "dev:prisma": "npx prisma generate && npx prisma migrate deploy",
+    "test": "node --test"
   },
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.830.0",

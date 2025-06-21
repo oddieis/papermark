@@ -42,11 +42,10 @@ export type BasePlan =
   | "datarooms"
   | "datarooms-plus";
 
-type PlanWithTrial = `${BasePlan}+drtrial`;
-type PlanWithOld = `${BasePlan}+old` | `${BasePlan}+drtrial+old`;
+type PlanWithOld = `${BasePlan}+old`;
 
 type PlanResponse = {
-  plan: BasePlan | PlanWithTrial | PlanWithOld;
+  plan: BasePlan | PlanWithOld;
   isCustomer: boolean;
   subscriptionCycle: "monthly" | "yearly";
 };
@@ -57,15 +56,15 @@ interface PlanDetails {
   old: boolean;
 }
 
-function parsePlan(plan: BasePlan | PlanWithTrial | PlanWithOld): PlanDetails {
+function parsePlan(plan: BasePlan | PlanWithOld): PlanDetails {
   if (!plan) return { plan: null, trial: null, old: false };
 
   // Split the plan on '+'
   const parts = plan.split("+");
   return {
-    plan: parts[0] as BasePlan, // Always the base plan
-    trial: parts.includes("drtrial") ? "drtrial" : null, // 'drtrial' if present, otherwise null
-    old: parts.includes("old"), // true if 'old' is present, otherwise false
+    plan: parts[0] as BasePlan,
+    trial: null,
+    old: parts.includes("old"),
   };
 }
 

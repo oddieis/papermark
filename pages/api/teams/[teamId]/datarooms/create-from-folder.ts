@@ -156,7 +156,6 @@ export default async function handle(
       const stripedTeamPlan = team.plan.replace("+old", "");
 
       if (
-        !team.plan.includes("drtrial") &&
         ["business", "datarooms", "datarooms-plus"].includes(stripedTeamPlan) &&
         limits &&
         team._count.datarooms >= limits.datarooms
@@ -167,11 +166,6 @@ export default async function handle(
         });
       }
 
-      if (team.plan.includes("drtrial") && team._count.datarooms > 0) {
-        return res
-          .status(400)
-          .json({ message: "Trial data room already exists" });
-      }
 
       if (["free", "pro"].includes(team.plan)) {
         return res
