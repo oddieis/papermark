@@ -29,9 +29,6 @@ export default async function handle(
         },
         select: {
           id: true,
-          subscriptionId: true,
-          startsAt: true,
-          endsAt: true,
           plan: true,
           _count: {
             select: {
