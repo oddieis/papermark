@@ -1,11 +1,7 @@
-import { useTeam } from "@/context/team-context";
-import useSWR from "swr";
 import { z } from "zod";
+import { FREE_PLAN_LIMITS } from "./constants";
 
-import { fetcher } from "@/lib/utils";
-
-import { configSchema } from "./server";
-import { usePlan } from "@/lib/swr/use-billing";
+export const configSchema = z.object({});
 
 export type LimitProps = z.infer<typeof configSchema> & {
   usage: {
@@ -17,32 +13,13 @@ export type LimitProps = z.infer<typeof configSchema> & {
 };
 
 export function useLimits() {
-  const teamInfo = useTeam();
-  const { isFree, isTrial } = usePlan();
-  const teamId = teamInfo?.currentTeam?.id;
-
-  const { data, error } = useSWR<LimitProps | null>(
-    teamId && `/api/teams/${teamId}/limits`,
-    fetcher,
-    {
-      dedupingInterval: 30000,
-    },
-  );
-
-  const canAddDocuments = data?.documents
-    ? data?.usage?.documents < data?.documents
-    : true;
-  const canAddLinks = data?.links ? data?.usage?.links < data?.links : true;
-  const canAddUsers = data?.users ? data?.usage?.users < data?.users : true;
-  const showUpgradePlanModal = (isFree && !isTrial) || (isTrial && !canAddUsers);
-
   return {
-    showUpgradePlanModal,
-    limits: data,
-    canAddDocuments,
-    canAddLinks,
-    canAddUsers,
-    error,
-    loading: !data && !error,
+    showUpgradePlanModal: false,
+    limits: { ...FREE_PLAN_LIMITS, usage: { documents: 0, links: 0, users: 0 } },
+    canAddDocuments: true,
+    canAddLinks: true,
+    canAddUsers: true,
+    error: undefined,
+    loading: false,
   };
 }

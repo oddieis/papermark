@@ -35,7 +35,6 @@ export async function checkoutSessionCompleted(
     checkoutSession.subscription as string,
   );
   const priceId = subscription.items.data[0].price.id;
-  const subscriptionId = subscription.id;
   const subscriptionStart = new Date(subscription.current_period_start * 1000);
   const subscriptionEnd = new Date(subscription.current_period_end * 1000);
   const quantity = subscription.items.data[0].quantity;
@@ -53,7 +52,6 @@ export async function checkoutSessionCompleted(
     return;
   }
 
-  const stripeId = checkoutSession.customer.toString();
   const teamId = checkoutSession.client_reference_id;
 
   let planLimits:
@@ -75,17 +73,13 @@ export async function checkoutSessionCompleted(
   planLimits.users =
     typeof quantity === "number" && quantity > 1 ? quantity : planLimits.users;
 
-  // Update the user with the subscription information and stripeId
+  // Update the user with the subscription information
   const team = await prisma.team.update({
     where: {
       id: teamId,
     },
     data: {
-      stripeId,
       plan: `${plan.slug}${isOldAccount ? "+old" : ""}`,
-      subscriptionId,
-      startsAt: subscriptionStart,
-      endsAt: subscriptionEnd,
       limits: planLimits,
     },
     select: {
